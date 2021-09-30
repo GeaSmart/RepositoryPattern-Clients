@@ -1,13 +1,13 @@
+using DAL;
+using DAL.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Services.Client;
+using System.Reflection;
 
 namespace Web
 {
@@ -24,6 +24,16 @@ namespace Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContext<ApplicationDBContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("default"))
+            );
+            
+            services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IClientModel, ClientModel>();
+
+            services.AddAutoMapper(Assembly.Load("Services"));//se debe indicar el Assembly Services
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
