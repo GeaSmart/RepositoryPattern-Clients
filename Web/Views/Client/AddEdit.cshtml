@@ -9,6 +9,11 @@
     <div class="col-md-6">
         <form asp-action="AddEdit" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label hidden asp-for="Id" class="control-label"></label>
+                <input hidden asp-for="Id" class="form-control"/>
+                @*<span  asp-validation-for="" class="text-danger"></span>*@
+            </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label asp-for="FirstName" class="control-label"></label>
@@ -28,7 +33,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="InscriptionDate" class="control-label"></label>
-                <input asp-for="InscriptionDate" class="form-control"/>
+                <input asp-for="InscriptionDate" class="form-control" type="date" />
                 <span asp-validation-for="InscriptionDate" class="text-danger"></span>
             </div>
             <div class="form-group">

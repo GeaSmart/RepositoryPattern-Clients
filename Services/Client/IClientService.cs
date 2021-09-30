@@ -11,5 +11,6 @@ namespace Services.Client
         Task<IClientModel> GetAsync(int id);
         Task<IClientModel> CreateClientAsync(IClientModel model);
         Task<IClientModel> UpdateClientAsync(IClientModel model);
+        Task DeleteClientAsync(IClientModel model);
     }
 }

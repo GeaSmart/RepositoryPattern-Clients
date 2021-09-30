@@ -16,10 +16,10 @@ namespace DAL.Repository
         {
             return await FindAllAsync();
         }
-
         public async Task<ClientEntity> GetAsync(int id)
         {
             return await FindAsync(id);
         }
+
     }
 }

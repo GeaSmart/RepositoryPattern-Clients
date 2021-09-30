@@ -8,8 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Web.Controllers
-{
-    [ApiController]
+{    
     [Route("[controller]")]
     public class ClientController : Controller
     {
@@ -22,7 +21,7 @@ namespace Web.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("Index")]
         public IActionResult Index()
         {
             return View(Get());
@@ -34,15 +33,14 @@ namespace Web.Controllers
             return service.GetAllAsync().Result;
         }
 
-        [HttpGet("AddEdit")]
-        [Route("AddEdit/{id:int}")]
+        [HttpGet]
         public async Task<IActionResult> AddEdit(int id = 0)
         {
             var cliente = service.GetAsync(id).Result;
             return View(cliente);
         }
 
-        [HttpPost("AddEdit")]
+        [HttpPost]
         public async Task<IActionResult> AddEdit([FromForm] ClientModel client)
         {
             if (ModelState.IsValid)
@@ -50,10 +48,22 @@ namespace Web.Controllers
                 IClientModel cliente = new ClientModel();
                 if (client.Id == 0)
                     cliente = await service.CreateClientAsync(mapper.Map<IClientModel>(client));
+                else
+                    cliente = await service.UpdateClientAsync(mapper.Map<IClientModel>(client));
 
                 return RedirectToAction(nameof(Index));
             }
             return View(client);
+        }
+
+        [HttpDelete("{id:int}")]
+        [Route("Delete/{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var cliente = service.GetAsync(id).Result;
+            await service.DeleteClientAsync(mapper.Map<IClientModel>(cliente));
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

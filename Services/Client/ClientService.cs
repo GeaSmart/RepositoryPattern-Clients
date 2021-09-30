@@ -43,5 +43,14 @@ namespace Services.Client
             await repository.CommitAsync();
             return model;
         }
+        public async Task DeleteClientAsync(IClientModel model)
+        {
+            var cliente = await repository.GetAsync(model.Id);
+            if(cliente != null)
+            {
+                repository.Delete(cliente);
+                await repository.CommitAsync();
+            }
+        }
     }
 }

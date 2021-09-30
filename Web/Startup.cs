@@ -30,8 +30,7 @@ namespace Web
             );
             
             services.AddScoped<IClientService, ClientService>();
-            services.AddScoped<IClientRepository, ClientRepository>();
-            services.AddScoped<IClientModel, ClientModel>();
+            services.AddScoped<IClientRepository, ClientRepository>();            
 
             services.AddAutoMapper(Assembly.Load("Services"));//se debe indicar el Assembly Services
         }
